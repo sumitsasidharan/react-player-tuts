@@ -2,9 +2,9 @@ import React from 'react';
 import ReactPlayer from 'react-player';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import { Button, Typography, IconButton } from '@material-ui/core';
+import { Button, Typography, IconButton, Tooltip } from '@material-ui/core';
 import { Container } from '@material-ui/core';
-import { makeStyles, Grid } from '@material-ui/core';
+import { withStyles, makeStyles, Grid, Slider } from '@material-ui/core';
 import {
    Bookmark,
    FastRewind,
@@ -44,6 +44,46 @@ const useStyles = makeStyles({
    }
 });
 
+function ValueLabelComponent(props) {
+   const { children, open, value } = props;
+
+   return (
+      <Tooltip open={open} enterTouchDelay={0} placement="top" title={value}>
+         {children}
+      </Tooltip>
+   );
+}
+
+const PrettoSlider = withStyles({
+   root: {
+      // color: '#52af77',
+      height: 8,
+   },
+   thumb: {
+      height: 24,
+      width: 24,
+      backgroundColor: '#fff',
+      border: '2px solid currentColor',
+      marginTop: -8,
+      marginLeft: -12,
+      '&:focus, &:hover, &$active': {
+         boxShadow: 'inherit',
+      },
+   },
+   active: {},
+   valueLabel: {
+      left: 'calc(-50% + 4px)',
+   },
+   track: {
+      height: 8,
+      borderRadius: 4,
+   },
+   rail: {
+      height: 8,
+      borderRadius: 4,
+   },
+})(Slider);
+
 const VideoPlayer = () => {
    const classes = useStyles();
 
@@ -64,7 +104,7 @@ const VideoPlayer = () => {
                   height={'100%'}
                   muted={true}
                   controls
-                  url="https://www.youtube.com/watch?v=4FiNdG_QMqU"
+                  url="https://www.youtube.com/watch?v=MnBI139TpiI"
                />
 
                <div className={classes.controlsWrapper}>
@@ -116,8 +156,10 @@ const VideoPlayer = () => {
                      direction="row"
                      alignItems="center"
                      justifyContent="space-between">
-                        
+                     <Grid item xs={12}>
+                        <PrettoSlider min={0} max={100} defaultValue={20} />
                      </Grid>
+                  </Grid>
                </div>
             </div>
          </Container>
@@ -127,5 +169,5 @@ const VideoPlayer = () => {
 
 export default VideoPlayer;
 
-// 9.49
+// 13.45
 // React video player with custom controls #3 - Styling and building control UI
